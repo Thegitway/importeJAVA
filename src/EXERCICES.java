@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class EXERCICES {
 
     //Exercice 1
@@ -90,13 +89,13 @@ public class EXERCICES {
 
                 String first_name, last_name, gender;
                 Date hire_date, birth_date;
-                first_name=rs.getString("first_name");
-                last_name=rs.getString("last_name");
-                gender=rs.getString("gender");
-                hire_date=rs.getDate("hire_date");
-                birth_date=rs.getDate("birth_date");
+                first_name = rs.getString("first_name");
+                last_name = rs.getString("last_name");
+                gender = rs.getString("gender");
+                hire_date = rs.getDate("hire_date");
+                birth_date = rs.getDate("birth_date");
 
-                String line = String.format("%s,%s,%s,%t,%t",first_name,last_name,gender,hire_date,birth_date);
+                String line = String.format("%s,%s,%s,%t,%t", first_name, last_name, gender, hire_date, birth_date);
                 fw.write(line);
             }
             fw.flush();
@@ -114,6 +113,7 @@ public class EXERCICES {
 
     }
 
+    //import
     public void importEmployees(String filePath) {
 
 
@@ -132,29 +132,31 @@ public class EXERCICES {
 
                 // use string.split to load a string array with the values from  each line of
                 // the file, using a comma as the delimiter
-                 String[] attributes = line.split(",");
+                String[] attributes = line.split(",");
 
-                Date hire_date= (Date) new SimpleDateFormat("YYYY-MM-DD").parse(attributes[3]);
-                Date birth_date= (Date) new SimpleDateFormat("YYYY-MM-DD").parse(attributes[3]);
+                Date hire_date = (Date) new SimpleDateFormat("YYYY-MM-DD").parse(attributes[3]);
+                Date birth_date = (Date) new SimpleDateFormat("YYYY-MM-DD").parse(attributes[3]);
 
-                 Employee employee = new Employee(attributes[0],attributes[1],attributes[2],hire_date,birth_date);
+                Employee employee = new Employee(attributes[0], attributes[1], attributes[2], hire_date, birth_date);
                 // adding book into ArrayList
                 employees.add(employee);
                 // read next line before looping
                 // if end of file reached, line would be null
                 line = bufferedReader.readLine();
-                }
+            }
 
 
             // 3.	Mise à jour des salaires
-          /*  PreparedStatement ps = con.prepareStatement("INSERT INTO employees.employees( birth_date, first_name, last_name, gender, hire_date) VALUES ( ?, ?, ?, ?, ?)");
+            for (Employee emp : employees) {
+                PreparedStatement ps = con.prepareStatement("INSERT INTO employees.employees( birth_date, first_name, last_name, gender, hire_date) VALUES ( ?, ?, ?, ?, ?)");
 
-            ps.setDate(2, birth_date);
-            ps.setString(3, first_name);
-            ps.setString(4, last_name);
-            ps.setString(5, gender);
-            ps.setDate(6, hire_date);
-            ps.execute();*/
+                ps.setDate(1, emp.birth_date);
+                ps.setString(2, emp.first_name);
+                ps.setString(3, emp.last_name);
+                ps.setString(4, emp.gender);
+                ps.setDate(5, emp.hire_date);
+                ps.execute();
+            }
 
 
             con.close();
